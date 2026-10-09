@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import recursosRoutes from "./routes/recursosRoutes.js";
 
 // Cargamos las variables de entorno
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/auth", authRoutes);
+app.use("/api/recursos", recursosRoutes);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
