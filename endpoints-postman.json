@@ -1,0 +1,509 @@
+{
+  "info": {
+    "_postman_id": "91f8dc4e-52ce-48c0-9a44-fc0f6bf76b51",
+    "name": "API Recursos de Aprendizaje",
+    "description": "Colección para probar la API de Recursos de Aprendizaje. Inicia el servidor y configura la base de datos antes de ejecutar las solicitudes. Registra y autentica usuarios con ambos roles para obtener los tokens requeridos. Las contraseñas de ejemplo cumplen la política de seguridad de la API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "Bienvenida",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ]
+            },
+            "description": "Comprueba que el servidor está disponible."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Registrar estudiante",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"estudiante@example.com\",\n  \"password\": \"Estudiante123!\",\n  \"rol\": \"Estudiante\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registra una cuenta de estudiante. Usa un correo que no esté registrado."
+          }
+        },
+        {
+          "name": "Registrar docente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"docente@example.com\",\n  \"password\": \"Docente123!\",\n  \"rol\": \"Docente\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registra una cuenta de docente. Usa un correo que no esté registrado."
+          }
+        },
+        {
+          "name": "Iniciar sesión estudiante",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login exitoso\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data.token).to.be.a(\"string\");",
+                  "  pm.collectionVariables.set(\"tokenEstudiante\", data.token);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"estudiante@example.com\",\n  \"password\": \"Estudiante123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Ejecuta después de registrar el estudiante. Guarda automáticamente su token para las solicitudes de estudiante."
+          }
+        },
+        {
+          "name": "Iniciar sesión docente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login exitoso\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const data = pm.response.json();",
+                  "  pm.expect(data.token).to.be.a(\"string\");",
+                  "  pm.collectionVariables.set(\"tokenDocente\", data.token);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"docente@example.com\",\n  \"password\": \"Docente123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Ejecuta después de registrar el docente. Guarda automáticamente su token para las solicitudes de docente."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recursos - consulta",
+      "item": [
+        {
+          "name": "Listar recursos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenEstudiante}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos"
+              ]
+            },
+            "description": "Requiere token de estudiante o docente."
+          }
+        },
+        {
+          "name": "Buscar y filtrar recursos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenEstudiante}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos?busqueda=javascript&tipo=video",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos"
+              ],
+              "query": [
+                {
+                  "key": "busqueda",
+                  "value": "javascript",
+                  "description": "Busca por título o ID."
+                },
+                {
+                  "key": "tipo",
+                  "value": "video",
+                  "description": "Filtra por tipo."
+                }
+              ]
+            },
+            "description": "Ambos parámetros son opcionales. Modifica sus valores para probar otros criterios."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recursos - docente",
+      "item": [
+        {
+          "name": "Crear recurso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Recurso creado\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"recursoId\", data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenDocente}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Introducción a JavaScript\",\n  \"descripcion\": \"Curso introductorio para aprender los fundamentos de JavaScript.\",\n  \"tipo\": \"video\",\n  \"enlace\": \"https://example.com/curso-javascript\",\n  \"imagen\": \"https://example.com/imagenes/javascript.png\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos"
+              ]
+            },
+            "description": "Crea un recurso y guarda automáticamente el ID devuelto en la variable recursoId."
+          }
+        },
+        {
+          "name": "Actualizar recurso",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenDocente}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Introducción a JavaScript - actualizado\",\n  \"descripcion\": \"Curso introductorio actualizado.\",\n  \"tipo\": \"video\",\n  \"enlace\": \"https://example.com/curso-javascript\",\n  \"imagen\": \"https://example.com/imagenes/javascript.png\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos/{{recursoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos",
+                "{{recursoId}}"
+              ]
+            },
+            "description": "Envía todos los campos del recurso. Primero ejecuta Crear recurso o define recursoId manualmente."
+          }
+        },
+        {
+          "name": "Eliminar recurso",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenDocente}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos/{{recursoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos",
+                "{{recursoId}}"
+              ]
+            },
+            "description": "Elimina el recurso indicado por recursoId."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recursos - estudiante",
+      "item": [
+        {
+          "name": "Agregar a favoritos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenEstudiante}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos/{{recursoId}}/favoritos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos",
+                "{{recursoId}}",
+                "favoritos"
+              ]
+            },
+            "description": "Requiere token de estudiante y un recurso existente. Se puede agregar cada recurso una sola vez."
+          }
+        },
+        {
+          "name": "Calificar recurso",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenEstudiante}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"puntuacion\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos/{{recursoId}}/calificar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos",
+                "{{recursoId}}",
+                "calificar"
+              ]
+            },
+            "description": "Requiere token de estudiante y un recurso existente. La puntuación permitida es de 1 a 5."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "tokenEstudiante",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tokenDocente",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "recursoId",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}
