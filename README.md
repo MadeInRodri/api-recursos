@@ -10,8 +10,8 @@ API REST para una aplicación de recursos de aprendizaje dirigida a estudiantes 
 - **Institución:** Universidad Don Bosco
 - **Carrera o programa:** Ing. en Ciencias de la computación
 - **Asignatura:** Desarrollo de Software Multiplataforma
-- **Docente:** [Completar]
-- **Periodo académico:** [Completar]
+- **Docente:** Alexander Alberto Siguenza Campos
+- **Periodo académico:** 4to año - 2do ciclo
 
 ### Contexto de la API
 
@@ -21,18 +21,18 @@ La autenticación se realiza mediante tokens JWT. Las contraseñas se almacenan 
 
 ## 2. Tecnologías utilizadas
 
-| Tecnología | Uso en el proyecto |
-|---|---|
-| **Node.js** y **JavaScript con módulos ES** | Ejecutar la aplicación. |
-| **Express 5** | Definir el servidor HTTP y las rutas REST. |
-| **MySQL** | Almacenar usuarios, recursos, favoritos y calificaciones. |
-| **mysql2** | Conectarse a MySQL mediante un pool de conexiones. |
-| **JSON Web Token (JWT)** (`jsonwebtoken`) | Autenticar y autorizar solicitudes. |
-| **bcrypt** | Generar y verificar hashes de contraseñas. |
-| **dotenv** | Cargar configuración desde variables de entorno. |
-| **CORS** (`cors`) | Habilitar solicitudes desde otros orígenes. |
-| **Nodemon** | Reiniciar automáticamente el servidor durante el desarrollo. |
-| **Postman** | Probar los endpoints; la colección se encuentra en [`endpoints-postman.json`](./endpoints-postman.json). |
+| Tecnología                                  | Uso en el proyecto                                                                                       |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Node.js** y **JavaScript con módulos ES** | Ejecutar la aplicación.                                                                                  |
+| **Express 5**                               | Definir el servidor HTTP y las rutas REST.                                                               |
+| **MySQL**                                   | Almacenar usuarios, recursos, favoritos y calificaciones.                                                |
+| **mysql2**                                  | Conectarse a MySQL mediante un pool de conexiones.                                                       |
+| **JSON Web Token (JWT)** (`jsonwebtoken`)   | Autenticar y autorizar solicitudes.                                                                      |
+| **bcrypt**                                  | Generar y verificar hashes de contraseñas.                                                               |
+| **dotenv**                                  | Cargar configuración desde variables de entorno.                                                         |
+| **CORS** (`cors`)                           | Habilitar solicitudes desde otros orígenes.                                                              |
+| **Nodemon**                                 | Reiniciar automáticamente el servidor durante el desarrollo.                                             |
+| **Postman**                                 | Probar los endpoints; la colección se encuentra en [`endpoints-postman.json`](./endpoints-postman.json). |
 
 ## 3. Instalación local y base de datos
 
@@ -371,5 +371,6 @@ También puedes importar [`endpoints-postman.json`](./endpoints-postman.json) en
 ## 5. Enlaces del proyecto
 
 - **Repositorio de esta API:** [MadeInRodri/api-recursos](https://github.com/MadeInRodri/api-recursos)
-- **Deploy de la API:** pendiente de publicación.
-- **Repositorio de la aplicación móvil:** pendiente de creación o publicación.
+- **Deploy de la API:** [Railway(api-recursos)](https://api-recursos-production.up.railway.app)
+- **Repositorio de la aplicación móvil:** [MadeInRodri/frontend-recursos](https://github.com/MadeInRodri/frontend-recursos)
+- **Video explicativo:** [MadeInRodri/api-recursos](https://youtu.be/OWIHBBx5LD0)

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-// 1. Middleware para verificar que el token sea válido
+//  Middleware para verificar que el token sea válido
 export const verifyToken = (req, res, next) => {
   // Obtenemos el token del header 'Authorization'
   const authHeader = req.header("Authorization");
