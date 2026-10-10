@@ -150,3 +150,21 @@ export const calificarRecurso = async (req, res) => {
     res.status(500).json({ error: "Error al calificar el recurso." });
   }
 };
+
+export const getRecursosFavoritos = async (req, res) => {
+  try {
+    const usuario_id = req.usuario.id;
+
+    const [recursos] = await pool.query(
+      `SELECT r.* FROM recursos r
+             INNER JOIN favoritos f ON r.id = f.recurso_id
+             WHERE f.usuario_id = ?`,
+      [usuario_id],
+    );
+
+    res.json({ recursos });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los recursos favoritos." });
+  }
+};

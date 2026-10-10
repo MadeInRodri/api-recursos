@@ -6,6 +6,7 @@ import {
   deleteRecurso,
   addFavorito,
   calificarRecurso,
+  getRecursosFavoritos,
 } from "../controllers/recursosController.js";
 import {
   verifyToken,
@@ -24,6 +25,7 @@ router.put("/:id", verifyToken, isDocente, updateRecurso);
 router.delete("/:id", verifyToken, isDocente, deleteRecurso);
 
 // Rutas exclusivas para el Estudiante
+router.get("/favoritos", verifyToken, isEstudiante, getRecursosFavoritos);
 router.post("/:id/favoritos", verifyToken, isEstudiante, addFavorito);
 router.post("/:id/calificar", verifyToken, isEstudiante, calificarRecurso);
 

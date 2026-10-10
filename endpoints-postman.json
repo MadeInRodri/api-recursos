@@ -408,6 +408,35 @@
       "name": "Recursos - estudiante",
       "item": [
         {
+          "name": "Listar recursos favoritos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenEstudiante}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/recursos/favoritos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "recursos",
+                "favoritos"
+              ]
+            },
+            "description": "Requiere token de estudiante. Devuelve los recursos marcados como favoritos por el estudiante autenticado."
+          }
+        },
+        {
           "name": "Agregar a favoritos",
           "request": {
             "auth": {
